@@ -9,7 +9,9 @@ from ..services import professor_service
 class ProfessorController(Resource):
     @staticmethod
     def get():
-        return "Teste professor"
+        professor = professor_service.listar_professores()
+        validate = professor_schema.ProfessorSchema(many=True)
+        return make_response(validate.jsonify(professor), 200)
 
     @staticmethod
     def post():

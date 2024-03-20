@@ -5,7 +5,7 @@ from marshmallow import fields
 
 class AlunoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = aluno_model.Aluno
+        model = aluno_model.AlunoModel
         load_instance = True
         fields = ("id", "nome", "data_nascimento")
 
