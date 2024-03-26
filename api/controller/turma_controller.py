@@ -24,7 +24,7 @@ class TurmaController(Resource):
             descricao = request.json["descricao"]
             data_inicio = request.json["data_inicio"]
             data_fim = request.json["data_fim"]
-            novaTurma = turma_dto.TurmaDTO(nome=nome, descricao=descricao,data_inicio=data_inicio, data_fim=data_fim)
+            novaTurma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim)
             retorno = turma_service.cadastrar_turma(novaTurma)
             turmaJson = turmaSchema.jsonify(retorno)
             return make_response(turmaJson, 201)
@@ -46,7 +46,7 @@ class TurmaController(Resource):
             novaTurmaAlterado = turma_dto.TurmaDTO(nome,descricao, data_inicio, data_fim)
             turma_service.atualizar_turma(turma, novaTurmaAlterado)
             turmaAtualizada = turma_service.listar_turmas_id(id)
-            return make_response(turmaSchema.jsonify(turmaAtualizada),200)
+            return make_response(turmaSchema.jsonify(turmaAtualizada), 200)
 
     @staticmethod
     def delete(id):
@@ -63,13 +63,12 @@ class TurmaDetailController(Resource):
     def get(id):
         turma = turma_service.listar_turmas_id(id)
         if turma is None:
-            return make_response(jsonify("Turma não encontrado"), 404)
+            return make_response(jsonify("Turma não encontrado!"), 404)
 
         validate = turma_schema.TurmaSchema()
         return make_response(validate.jsonify(turma), 200)
 
 
 api.add_resource(TurmaController, '/turma')
-api.add_resource(TurmaController, '/turma/<int:id>', endpoint='alterar', methods=["PUT"])
-api.add_resource(TurmaController, '/turma/<int:id>', endpoint='excluir', methods=["DELETE"])
-api.add_resource(TurmaDetailController, '/turma/<int:id>')
+api.add_resource(TurmaController, '/turma/<int:id>', endpoint='alterar_excluir', methods=["PUT","DELETE"])
+# api.add_resource(TurmaDetailController, '/turma/<int:id>')
