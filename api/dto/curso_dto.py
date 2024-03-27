@@ -2,6 +2,6 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DisciplinaDTO():
+class CursoDTO():
     nome: str
-
+    descricao: str

@@ -18,7 +18,7 @@ class TurmaController(Resource):
         turmaSchema = turma_schema.TurmaSchema()
         validate = turmaSchema.validate(request.json)
         if validate:
-            return make_response(jsonify(validate, 400))
+            return make_response(jsonify(validate), 400)
         else:
             nome = request.json["nome"]
             descricao = request.json["descricao"]
@@ -70,5 +70,6 @@ class TurmaDetailController(Resource):
 
 
 api.add_resource(TurmaController, '/turma')
-api.add_resource(TurmaController, '/turma/<int:id>', endpoint='alterar_excluir', methods=["PUT","DELETE"])
-# api.add_resource(TurmaDetailController, '/turma/<int:id>')
+api.add_resource(TurmaController, '/turma/<int:id>', endpoint='alterar_excluir_turma', methods=["PUT","DELETE"])
+api.add_resource(TurmaDetailController, '/turma/<int:id>')
+

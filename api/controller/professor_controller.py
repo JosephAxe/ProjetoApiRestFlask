@@ -18,7 +18,7 @@ class ProfessorController(Resource):
         professorSchema = professor_schema.ProfessorSchema()
         validate = professorSchema.validate(request.json)
         if validate:
-            return make_response(jsonify(validate, 400))
+            return make_response(jsonify(validate), 400)
         else:
             nome = request.json["nome"]
             data_nascimento = request.json["data_nascimento"]
@@ -27,5 +27,44 @@ class ProfessorController(Resource):
             professorJson = professorSchema.jsonify(retorno)
             return make_response(professorJson, 201)
 
+    @staticmethod
+    def put(id):
+        professor = professor_service.listar_professores_id(id)
+        if professor is None:
+            return make_response(jsonify("Professor não encontrado!"), 404)
+        professorSchema = professor_schema.ProfessorSchema()
+        validate = professorSchema.validate(request.json)
+        if validate:
+            make_response(jsonify(validate), 400)
+        else:
+            nome = request.json["nome"]
+            data_nascimento = request.json["data_nascimento"]
+            novoProfessorAlterado = professor_dto.ProfessorDTO(nome, data_nascimento)
+            professor_service.atualizar_professor(professor, novoProfessorAlterado)
+            professorAtualizado = professor_service.listar_professores_id(id)
+            return make_response(professorSchema.jsonify(professorAtualizado), 200)
+
+
+    @staticmethod
+    def delete(id):
+        professorBD = professor_service.listar_professores_id(id)
+        if professorBD is None:
+            return make_response(jsonify("Professor não encontrado!"), 404)
+        professor_service.excluir_professor(professorBD)
+        return make_response(jsonify("Professor excluido com sucesso!"), 204)
+
+
+class ProfessorDetailController(Resource):
+    @staticmethod
+    def get(id):
+        professor = professor_service.listar_professores_id(id)
+        if professor is None:
+            return make_response(jsonify("Professor não encontrado!"), 404)
+        validate = professor_schema.ProfessorSchema()
+        return make_response(validate.jsonify(professor), 200)
+
 
 api.add_resource(ProfessorController, '/professor')
+api.add_resource(ProfessorController, '/professor/<int:id>', endpoint='alterar_excluir_professor', methods=["PUT","DELETE"])
+api.add_resource(ProfessorDetailController, '/professor/<int:id>')
+

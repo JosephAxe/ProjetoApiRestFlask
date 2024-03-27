@@ -9,6 +9,5 @@ class DisciplinaSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         fields = ("id", "nome")
 
-    id = fields.Integer(required=False)
     nome = fields.String(required=True)
 

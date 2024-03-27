@@ -10,19 +10,20 @@ def cadastrar_disciplina(disciplina):
 
 
 def listar_disciplinas():
-    disciplina = disciplina_model.DisciplinaModel().query.all()
+    disciplinas = disciplina_model.DisciplinaModel.query.all()  # select * from disciplina
+    return disciplinas
+
+
+def listar_disciplinas_id(parametro_id):
+    disciplina = disciplina_model.DisciplinaModel.query.filter_by(id=parametro_id).first()  # select * from disciplina
     return disciplina
 
 
-def listar_disciplina_id(parametro_id):
-    disciplina = disciplina_model.DisciplinaModel.query.filter_by(id=parametro_id).first()
-
-
-def atualizar_displina(disciplina_bd, disciplina_atualizada):
-    disciplina_bd.nome = disciplina_atualizada.nome
+def atualizar_disciplina(disciplina_bd, disciplina_atualizado):
+    disciplina_bd.nome = disciplina_atualizado.nome
     db.session.commit()
 
 
-def exluir_disciplina(disciplina):
+def excluir_disciplina(disciplina):
     db.session.delete(disciplina)
     db.session.commit()

@@ -4,7 +4,6 @@ from api import db
 
 def cadastrar_turma(turma):
     turma_bd = turma_model.TurmaModel(nome=turma.nome, descricao=turma.descricao, data_inicio=turma.data_inicio, data_fim=turma.data_fim)
-
     db.session.add(turma_bd)
     db.session.commit()
     return turma_bd

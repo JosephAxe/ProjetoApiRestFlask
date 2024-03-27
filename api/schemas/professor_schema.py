@@ -2,9 +2,10 @@ from api import ma
 from ..models import professor_model
 from marshmallow import fields
 
+
 class ProfessorSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = professor_model.Professor
+        model = professor_model.ProfessorModel
         load_instance = True
         fields = ("id", "nome", "data_nascimento")
 
