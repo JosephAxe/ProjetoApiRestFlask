@@ -8,3 +8,4 @@ class TurmaModel(db.Model):
     descricao = db.Column(db.String(200), nullable=False)
     data_inicio = db.Column(db.Date, nullable=False)
     data_fim = db.Column(db.Date, nullable=False)
+    curso_id = db.Column(db.Integer(), db.ForeignKey("curso.id"))

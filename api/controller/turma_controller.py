@@ -24,7 +24,9 @@ class TurmaController(Resource):
             descricao = request.json["descricao"]
             data_inicio = request.json["data_inicio"]
             data_fim = request.json["data_fim"]
-            novaTurma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim)
+            curso_id = request.json["curso_id"]
+            novaTurma = turma_dto.TurmaDTO(nome=nome, descricao=descricao, data_inicio=data_inicio, data_fim=data_fim,
+                                           curso_id=curso_id)
             retorno = turma_service.cadastrar_turma(novaTurma)
             turmaJson = turmaSchema.jsonify(retorno)
             return make_response(turmaJson, 201)
@@ -43,7 +45,9 @@ class TurmaController(Resource):
             descricao = request.json["descricao"]
             data_inicio = request.json["data_inicio"]
             data_fim = request.json["data_fim"]
-            novaTurmaAlterado = turma_dto.TurmaDTO(nome,descricao, data_inicio, data_fim)
+            curso_id = request.json["curso_id"]
+            novaTurmaAlterado = turma_dto.TurmaDTO(nome=nome,descricao=descricao, data_inicio=data_inicio,
+                                                   data_fim=data_fim, curso_id=curso_id)
             turma_service.atualizar_turma(turma, novaTurmaAlterado)
             turmaAtualizada = turma_service.listar_turmas_id(id)
             return make_response(turmaSchema.jsonify(turmaAtualizada), 200)

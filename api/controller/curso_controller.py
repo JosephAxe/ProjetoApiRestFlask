@@ -22,7 +22,9 @@ class CursoController(Resource):
         else:
             nome = request.json["nome"]
             descricao = request.json["descricao"]
-            novoCurso = curso_dto.CursoDTO(nome=nome, descricao=descricao)
+            disciplinas = request.json["disciplinas"]
+
+            novoCurso = curso_dto.CursoDTO(nome=nome, descricao=descricao, disciplinas=disciplinas)
             retorno = curso_service.cadastrar_curso(novoCurso)
             cursoJson = cursoSchema.jsonify(retorno)
             return make_response(cursoJson, 201)
@@ -39,7 +41,8 @@ class CursoController(Resource):
         else:
             nome = request.json["nome"]
             descricao = request.json["descricao"]
-            novoCursoAlterado = curso_dto.CursoDTO(nome, descricao)
+            disciplinas = request.json["disciplinas"]
+            novoCursoAlterado = curso_dto.CursoDTO(nome, descricao, disciplinas=disciplinas)
             curso_service.atualizar_curso(curso, novoCursoAlterado)
             cursoAtualizada = curso_service.listar_cursos_id(id)
             return make_response(cursoSchema.jsonify(cursoAtualizada), 200)

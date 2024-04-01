@@ -3,7 +3,8 @@ from api import db
 
 
 def cadastrar_turma(turma):
-    turma_bd = turma_model.TurmaModel(nome=turma.nome, descricao=turma.descricao, data_inicio=turma.data_inicio, data_fim=turma.data_fim)
+    turma_bd = turma_model.TurmaModel(nome=turma.nome, descricao=turma.descricao, data_inicio=turma.data_inicio, data_fim=turma.data_fim,
+                                      curso_id=turma.curso_id)
     db.session.add(turma_bd)
     db.session.commit()
     return turma_bd
@@ -24,6 +25,7 @@ def atualizar_turma(turma_bd, turma_atualizado):
     turma_bd.descricao = turma_atualizado.descricao
     turma_bd.data_inicio = turma_atualizado.data_inicio
     turma_bd.data_fim = turma_atualizado.data_fim
+    turma_bd.curso_id = turma_atualizado.curso_id
     db.session.commit()
 
 
